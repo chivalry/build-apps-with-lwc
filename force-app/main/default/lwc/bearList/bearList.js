@@ -1,13 +1,10 @@
+import {NavigationMixin } from 'lightning/navigation';
 import { LightningElement, wire } from 'lwc';
-import ursusResources from '@salesforce/resourceUrl/ursus_park';
 import searchBears from '@salesforce/apex/BearController.searchBears';
 
-export default class BearList extends LightningElement {
+export default class BearList extends NavigationMixin(LightningElement) {
 	searchTerm = '';
 	@wire(searchBears, {searchTerm: '$searchTerm'}) bears;
-    appResources = {
-        bearSilhouette: `${ursusResources}/img/standing-bear-silhouette.png`
-    };
 
 	handleSearchTermChange(event) {
 		window.clearTimeout(this.delayTimeout);
@@ -19,5 +16,17 @@ export default class BearList extends LightningElement {
 
 	get hasResults() {
 		return (this.bears.data.length > 0);
+	}
+
+	handleBearView(event) {
+		const bearId = event.detail;
+		this[NavigationMixin]({
+			type: 'standard__recordPage',
+			attributes: {
+				recordId: bearId,
+				objectApiName: 'Bear__c',
+				actionName: 'view',
+			},
+		});
 	}
 }
