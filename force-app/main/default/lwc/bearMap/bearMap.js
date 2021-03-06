@@ -12,7 +12,7 @@ export default class BearMap extends LightningElement {
             this.messageContext,
             BEAR_LIST_UPDATE_MESSAGE,
             (message) => {
-                this.handleBearListUpdate(mesage);
+                this.handleBearListUpdate(message);
             }
         );
     }
