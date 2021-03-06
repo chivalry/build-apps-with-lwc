@@ -1,10 +1,20 @@
+import { publish, MessageContext } from 'lightning/messageService';
+import BEAR_LIST_UPDATE_MESSAGE from '@salesforce/messageChannel/BearListUpdate__c';
 import {NavigationMixin } from 'lightning/navigation';
 import { LightningElement, wire } from 'lwc';
 import searchBears from '@salesforce/apex/BearController.searchBears';
 
 export default class BearList extends NavigationMixin(LightningElement) {
 	searchTerm = '';
-	@wire(searchBears, {searchTerm: '$searchTerm'}) bears;
+	bears;
+	@wire(MessageContext) messageContext;
+	@wire(searchBears, {searchTerm: '$searchTerm'}) loadBears(result) {
+		this.bears = result;
+		if (result.data) {
+			const message = { bears: result.data };
+			publish(this.messageContext, BEAR_LIST_UPDATE_MESSAGE, message);
+		}
+	}
 
 	handleSearchTermChange(event) {
 		window.clearTimeout(this.delayTimeout);
