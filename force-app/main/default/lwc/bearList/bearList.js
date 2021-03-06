@@ -20,7 +20,7 @@ export default class BearList extends NavigationMixin(LightningElement) {
 
 	handleBearView(event) {
 		const bearId = event.detail;
-		this[NavigationMixin]({
+		this[NavigationMixin.Navigate]({
 			type: 'standard__recordPage',
 			attributes: {
 				recordId: bearId,
