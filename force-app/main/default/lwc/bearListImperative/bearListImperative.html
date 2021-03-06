@@ -1,6 +1,6 @@
 <template>
     <lightning-card title="Bears" icon-name="utility:animal_and_nature">
-        <div class="slds-card_body_inner">
+        <div class="slds-card__body_inner">
             <template if:true={bears}>
                 <lightning-layout multiple-rows="true" pull-to-boundary="small">
                     <template for:each={bears} for:item="bear">
@@ -15,7 +15,7 @@
                                                  alt="Bear profile"
                                                  class="bear-silhouette" />
                                         </div>
-                                        <div class="slds-media_body">
+                                        <div class="slds-media__body">
                                             <p class="slds-var-m-bottom_xx-small">
                                                 {bear.Sex__c}
                                             </p>
